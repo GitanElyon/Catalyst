@@ -3,8 +3,8 @@
   import { getCurrentWindow } from '@tauri-apps/api/window';
   import MainWindow from './window.svelte';
 
-  //let workSpaceDir = "C:/Projects/catalyst";
-  let workSpaceDir = null;
+  let workSpaceDir = "C:/Projects/catalyst";
+  //let workSpaceDir = null;
   
   setContext('workSpaceDir', workSpaceDir);
 
@@ -273,6 +273,7 @@
   .menu-container {
     position: fixed;
     text-align: left;
+    z-index: 9999;
   }
 
   .menu {
@@ -417,7 +418,7 @@
     font-weight: 500;
     background-color: rgb(19, 19, 19);
     border-radius: 5px;
-    padding: 5px;
+    padding: 2px;
     border: none;
     user-select: none;
     outline: none;
