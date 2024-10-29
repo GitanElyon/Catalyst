@@ -56,12 +56,13 @@
     grid-template-areas:
       "code-editor file-explorer"
       "console file-explorer";
-    grid-template-columns: var(--code-editor-width) calc(100vw - var(--code-editor-width) - 5px);
-    grid-template-rows: calc(100vh - var(--console-height) - 5px) var(--console-height);
+    grid-template-columns: var(--code-editor-width) calc(100vw - var(--code-editor-width) - 15px);
+    grid-template-rows: calc(100vh - var(--console-height) - 15px) var(--console-height);
     gap: 5px;
     height: 100vh;
     position: relative; 
     z-index: 1;
+    margin: 5px;
   }
 
   .file-explorer {
@@ -96,6 +97,7 @@
     bottom: calc(var(--console-height)); /* Align above the console */
     left: 0;
     z-index: 10; /* Ensure the resizer is above other elements */
+    transform: translateY(-200%);
   }
 </style>
 
