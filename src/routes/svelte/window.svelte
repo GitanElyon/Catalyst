@@ -1,7 +1,7 @@
 <script lang="ts">
-  import CodeEditor from './editor.svelte';
+  import CodeEditor from './mainPanel.svelte';
   import FileExplorer from './activityBar.svelte';
-  import Console from './panel.svelte';
+  import Console from './actionBar.svelte';
 
   // Initial sizes as percentages
   let codeEditorWidth: number = 70; // Width of the code editor
@@ -63,6 +63,7 @@
     position: relative; 
     z-index: 1;
     margin: 5px;
+    
   }
 
   .file-explorer {
@@ -79,24 +80,24 @@
 
   .resizer {
     cursor: ew-resize;
-    width: 5px; /* Width of the horizontal resizer */
-    background-color: #0000005a; /* Color of the resizer */
-    height: 100%; /* Full height for resizer */
-    position: absolute; /* Positioning */
-    left: var(--code-editor-width); /* Align next to the code editor */
+    width: 5px;
+    /* background-color: #0000005a; */
+    height: 100%;
+    position: absolute;
+    left: var(--code-editor-width);
     top: 0;
-    z-index: 10; /* Ensure the resizer is above other elements */
+    z-index: 10;
   }
 
   .vertical-resizer {
     cursor: ns-resize;
-    height: 5px; /* Height of the vertical resizer */
-    background-color: #0000005a; /* Color of the vertical resizer */
-    width: var(--code-editor-width); /* Full width for resizer */
-    position: absolute; /* Positioning */
-    bottom: calc(var(--console-height)); /* Align above the console */
+    height: 5px;
+    /* background-color: #0000005a; */
+    width: var(--code-editor-width);
+    position: absolute;
+    bottom: calc(var(--console-height));
     left: 0;
-    z-index: 10; /* Ensure the resizer is above other elements */
+    z-index: 10;
     transform: translateY(-200%);
   }
 </style>

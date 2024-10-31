@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount, setContext } from 'svelte';
   import { getCurrentWindow } from '@tauri-apps/api/window';
-  import MainWindow from './window.svelte';
+  import MainWindow from './svelte/window.svelte';
 
-  let workSpaceDir = "C:/Projects/catalyst";
-  //let workSpaceDir = null;
+  //let workSpaceDir = "C:/Projects/catalyst";
+  let workSpaceDir = null;
   
   setContext('workSpaceDir', workSpaceDir);
 

@@ -1,4 +1,9 @@
-<script>
+<script lang="ts">
+    import Debug from "./actionBar/debug.svelte";
+    import Terminal from "./actionBar/terminal.svelte";
+    import Problems from "./actionBar/problems.svelte";
+    import Ports from "./actionBar/ports.svelte";
+
     let log = "PS C:\\Projects\\Catalyst> _";
   </script>
   
@@ -13,8 +18,8 @@
       font-family: monospace;
     }
   </style>
-  
   <div class="console">
-    <p>{log}</p>
+    <!--<p>{log}</p>-->
+    <Terminal />
   </div>
   
