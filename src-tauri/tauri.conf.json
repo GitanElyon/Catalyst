@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "catalyst",
+  "productName": "Catalyst",
   "version": "0.1.0",
   "identifier": "com.catalyst.app",
   "build": {
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "catalyst",
+        "title": "Catalyst",
         "width": 800,
         "height": 600
       }

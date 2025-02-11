@@ -1,8 +1,8 @@
 [package]
-name = "catalyst"
+name = "Catalyst"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A blazingly fast lightweight code editor built in with a minimalist theme. "
+authors = ["gitanelyon"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
