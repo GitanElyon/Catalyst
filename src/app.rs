@@ -6,72 +6,68 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
+    // Generic Tauri invoke to interact with native commands
     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "core"])]
     async fn invoke(cmd: &str, args: JsValue) -> JsValue;
 }
 
+// Arguments for saving a file
 #[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
+struct SaveFileArgs<'a> {
+    content: &'a str,
 }
 
 pub fn App() -> Element {
-    let mut name = use_signal(|| String::new());
-    let mut greet_msg = use_signal(|| String::new());
+    let mut document_content = use_signal(|| String::new());
 
-    let greet = move |_: FormEvent| async move {
-        if name.read().is_empty() {
-            return;
-        }
+    // Opens a file using Tauri, receives its contents and updates the editor
+    let open_file = move |_| async move {
+        // Call the Tauri command "open_file"
+        let result = invoke("open_file", JsValue::NULL)
+            .await
+            .as_string()
+            .unwrap_or_default();
+        document_content.set(result);
+    };
 
-        let name = name.read();
-        let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &*name }).unwrap();
-        // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-        let new_msg = invoke("greet", args).await.as_string().unwrap();
-        greet_msg.set(new_msg);
+    // Saves the current content using Tauri
+    let save_file = move |_| async move {
+        let content = document_content.read();
+        let args =
+            serde_wasm_bindgen::to_value(&SaveFileArgs { content: &*content }).unwrap();
+        // Call the Tauri command "save_file" (native side implementation required)
+        let _ = invoke("save_file", args).await;
     };
 
     rsx! {
         link { rel: "stylesheet", href: "assets/styles.css" }
         main {
-            class: "container",
-            h1 { "Welcome to Tauri + Dioxus" }
-
+            class: "container code-editor-container",
+    
             div {
-                class: "row",
-                a {
-                    href: "https://tauri.app",
-                    target: "_blank",
-                    img {
-                        src: "assets/tauri.svg",
-                        class: "logo tauri",
-                         alt: "Tauri logo"
-                    }
+                class: "toolbar",
+                button {
+                    class: "toolbar-button",
+                    onclick: open_file,
+                    "Open File"
                 }
-                a {
-                    href: "https://dioxuslabs.com/",
-                    target: "_blank",
-                    img {
-                        src: "assets/dioxus.png",
-                        class: "logo dioxus",
-                        alt: "Dioxus logo"
-                    }
+                button {
+                    class: "toolbar-button",
+                    onclick: save_file,
+                    "Save File"
                 }
             }
-            p { "Click on the Tauri and Dioxus logos to learn more." }
-
-            form {
-                class: "row",
-                onsubmit: greet,
-                input {
-                    id: "greet-input",
-                    placeholder: "Enter a name...",
-                    value: "{name}",
-                    oninput: move |event| name.set(event.value())
+    
+            div {
+                class: "editor",
+                textarea {
+                    id: "document-editor",
+                    class: "editor-textarea",
+                    placeholder: "Edit your code here...",
+                    value: "{document_content}",
+                    oninput: move |event| document_content.set(event.value())
                 }
-                button { r#type: "submit", "Greet" }
             }
-            p { "{greet_msg}" }
         }
     }
 }
