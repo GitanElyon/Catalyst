@@ -46,9 +46,7 @@ pub fn App() -> Element {
     let close_window = move |_| async move {
         let _ = invoke("close_window", JsValue::NULL).await;
     };
-
-    // making the window draggable
-    
+     
 
     rsx! {
         link { rel: "stylesheet", href: "assets/styles.css" }
@@ -98,11 +96,36 @@ pub fn App() -> Element {
                         onclick: move |_| document_content.set(String::new()),
                         "Redo"
                     }
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Cut"
+                    }
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Copy"
+                    }
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Paste"
+                    }
                 }
                 div {
                     class: "toolbar-button",
                     id: "run-button",
                     "Run"
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Run"
+                    }
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Debug"
+                    }
                 }
                 div {
                     class: "toolbar-button",
@@ -116,7 +139,17 @@ pub fn App() -> Element {
                     button {
                         class: "toolbar-sub-button",
                         onclick: move |_| document_content.set(String::new()),
-                        "About"
+                        "About Catalyst"
+                    }
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Preferences"
+                    }
+                    button {
+                        class: "toolbar-sub-button",
+                        onclick: move |_| document_content.set(String::new()),
+                        "Check for Updates"
                     }
                 }
 
