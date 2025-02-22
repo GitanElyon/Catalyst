@@ -18,6 +18,7 @@ body {
   box-sizing: border-box;
   overscroll-behavior: none;
   overflow: hidden;
+  textarea::-webkit-scrollbar-corner { background-color: transparent; }
 }
 
 textarea {
@@ -107,6 +108,7 @@ button:hover {
 .toolbar-button {
   border-radius: 5px;
   padding: 0px 5px;
+  transition: background-color 0.3s ease;
 }
 
 .window-button {
@@ -136,6 +138,11 @@ button:hover {
   height: 25px;
 }
 
+#corner-logo:hover {
+  cursor: move;
+  background-color: #00000000;
+}
+
 .dropdown-menu {
   position: absolute;
   display: flex;
@@ -144,6 +151,7 @@ button:hover {
   border-radius: 10px;
   opacity: 0;
   visibility: hidden;
+  margin: 5px 0 0 -10px;
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
@@ -152,4 +160,21 @@ button:hover {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+.dropdown-menu button {
+  padding: 5px;
+  height: 30px;
+  border: none;
+  margin: 5px;
+  background-color: #00000000;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu button:hover {
+  background-color: #30303080;
+  transition: background-color 0.3s ease;
 }
