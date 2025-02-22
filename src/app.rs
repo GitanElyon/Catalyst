@@ -262,6 +262,28 @@ pub fn App() -> Element {
             }
 
             div {
+                class: "toolbar bottom-toolbar",
+                div {
+                    class: "toolbar-button",
+                    id: "problem-button",
+                    onclick: move |_| document_content.set(String::new()),
+                    "Problems"
+                }
+                div {
+                    class: "toolbar-button",
+                    id: "output-button",
+                    onclick: move |_| document_content.set(String::new()),
+                    "Output"
+                }
+                div {
+                    class: "toolbar-button",
+                    id: "terminal-button",
+                    onclick: move |_| document_content.set(String::new()),
+                    "Terminal"
+                }
+            }
+
+            div {
                 class: "editor",
                 textarea {
                     id: "document-editor",

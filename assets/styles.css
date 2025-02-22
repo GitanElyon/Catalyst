@@ -109,6 +109,10 @@ button:hover {
   left: calc(50vw - 100px);
 }
 
+.bottom-toolbar {
+  top: calc(100vh - 65px);
+}
+
 .search-bar { 
   width: 200px;
   border-radius: 10px;
