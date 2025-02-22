@@ -265,7 +265,7 @@ pub fn App() -> Element {
                 class: "toolbar bottom-toolbar",
                 div {
                     class: "toolbar-button",
-                    id: "problem-button",
+                    id: "problems-button",
                     onclick: move |_| document_content.set(String::new()),
                     "Problems"
                 }
@@ -280,6 +280,38 @@ pub fn App() -> Element {
                     id: "terminal-button",
                     onclick: move |_| document_content.set(String::new()),
                     "Terminal"
+                }
+            }
+
+            div {
+                class: "toolbar left-toolbar",
+                img {
+                    class: "toolbar-button",
+                    id: "explorer-button",
+                    src: "assets/icons/explorer.svg",
+                    alt: "explorer",
+                    onclick: move |_| document_content.set(String::new())
+                }
+                img {
+                    class: "toolbar-button",
+                    id: "source-control-button",
+                    src: "assets/icons/source-control.svg",
+                    alt: "source-control",
+                    onclick: move |_| document_content.set(String::new())
+                }
+                img {
+                    class: "toolbar-button",
+                    id: "debug-button",
+                    src: "assets/icons/debug.svg",
+                    alt: "debug",
+                    onclick: move |_| document_content.set(String::new())
+                }
+                img {
+                    class: "toolbar-button",
+                    id: "extensions-button",
+                    src: "assets/icons/extensions.svg",
+                    alt: "extensions",
+                    onclick: move |_| document_content.set(String::new())
                 }
             }
 

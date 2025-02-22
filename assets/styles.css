@@ -113,6 +113,17 @@ button:hover {
   top: calc(100vh - 65px);
 }
 
+.left-toolbar {
+  flex-direction: column;
+  left: calc(100vw - 75px);
+  top: calc(50vh - 100px);
+}
+
+.left-toolbar img {
+  width: 25px;
+  height: 25px;
+}
+
 .search-bar { 
   width: 200px;
   border-radius: 10px;
