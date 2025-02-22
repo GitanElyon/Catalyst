@@ -105,6 +105,23 @@ button:hover {
   left: calc(100vw - 165px);
 }
 
+.search-toolbar {
+  left: calc(50vw - 100px);
+}
+
+.search-bar { 
+  width: 200px;
+  border-radius: 10px;
+  padding: 5px;
+  border: none;
+  color: #ffffff;
+  background-color: #35353525;
+}
+
+.search-bar:focus {
+  outline: none;
+}
+
 .toolbar-button {
   border-radius: 5px;
   padding: 0px 5px;

@@ -79,12 +79,20 @@ pub fn App() -> Element {
         help_dropdown_open.set(new_state);
     };
 
+    let close_dropdowns = move |_| {
+        file_dropdown_open.set(false);
+        edit_dropdown_open.set(false);
+        run_dropdown_open.set(false);
+        help_dropdown_open.set(false);
+        // print to console for debugging
         
+    };
 
     rsx! {
         link { rel: "stylesheet", href: "assets/styles.css" }
         main {
             class: "container code-editor-container",
+            onmousedown: close_dropdowns,
 
             div {
                 class: "toolbar top-toolbar",
@@ -101,6 +109,7 @@ pub fn App() -> Element {
                     onclick: toggle_file_dropdown,
                     "File"
                     div {
+                        onmousedown: |e| e.stop_propagation(),
                         class: if *file_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
                         button {
                             class: "toolbar-sub-button",
@@ -125,6 +134,7 @@ pub fn App() -> Element {
                     onclick: toggle_edit_dropdown,
                     "Edit"
                     div {
+                        onmousedown: |e| e.stop_propagation(),
                         class: if *edit_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
                         button {
                             class: "toolbar-sub-button",
@@ -159,6 +169,7 @@ pub fn App() -> Element {
                     onclick: toggle_run_dropdown,
                     "Run"
                     div {
+                        onmousedown: |e| e.stop_propagation(),
                         class: if *run_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
                         button {
                             class: "toolbar-sub-button",
@@ -183,6 +194,7 @@ pub fn App() -> Element {
                     onclick: toggle_help_dropdown,
                     "Help"
                     div {
+                        onmousedown: |e| e.stop_propagation(),
                         class: if *help_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
                         button {
                             class: "toolbar-sub-button",
@@ -204,6 +216,19 @@ pub fn App() -> Element {
                             onclick: move |_| document_content.set(String::new()),
                             "Check for Updates"
                         }
+                    }
+                }
+            }
+
+            div {
+                class: "toolbar search-toolbar",
+                input {
+                    class: "search-bar",
+                    type: "text",
+                    placeholder: "Search...",
+                    oninput: |event| {
+                        let value = event.value();
+                        // print to console for debugging
                     }
                 }
             }
