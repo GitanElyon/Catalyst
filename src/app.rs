@@ -1,6 +1,9 @@
 #![allow(non_snake_case)]
 
-use dioxus::{html::{button, img}, prelude::*};
+use dioxus::{
+    html::{button, img},
+    prelude::*, web,
+};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 
@@ -19,6 +22,10 @@ struct SaveFileArgs<'a> {
 
 pub fn App() -> Element {
     let mut document_content = use_signal(|| String::new());
+    let mut file_dropdown_open = use_signal(|| false);
+    let mut edit_dropdown_open = use_signal(|| false);
+    let mut run_dropdown_open = use_signal(|| false);
+    let mut help_dropdown_open = use_signal(|| false);
 
     // Opens a file using Tauri, receives its contents and updates the editor
     let open_file = move |_| async move {
@@ -46,7 +53,33 @@ pub fn App() -> Element {
     let close_window = move |_| async move {
         let _ = invoke("close_window", JsValue::NULL).await;
     };
-     
+
+    // toolbar dropdown logic
+    let toggle_file_dropdown = move |_| {
+        let current = *file_dropdown_open.read();
+        let new_state = !current;
+        file_dropdown_open.set(new_state);
+    };
+
+    let toggle_edit_dropdown = move |_| {
+        let current = *edit_dropdown_open.read();
+        let new_state = !current;
+        edit_dropdown_open.set(new_state);
+    };
+
+    let toggle_run_dropdown = move |_| {
+        let current = *run_dropdown_open.read();
+        let new_state = !current;
+        run_dropdown_open.set(new_state);
+    };
+
+    let toggle_help_dropdown = move |_| {
+        let current = *help_dropdown_open.read();
+        let new_state = !current;
+        help_dropdown_open.set(new_state);
+    };
+
+        
 
     rsx! {
         link { rel: "stylesheet", href: "assets/styles.css" }
@@ -65,94 +98,114 @@ pub fn App() -> Element {
                 div {
                     class: "toolbar-button",
                     id: "file-button",
+                    onclick: toggle_file_dropdown,
                     "File"
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "New File"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: open_file,
-                        "Open File"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: save_file,
-                        "Save File"
+                    div {
+                        class: if *file_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "New File"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: open_file,
+                            "Open File"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: save_file,
+                            "Save File"
+                        }
                     }
                 }
                 div {
                     class: "toolbar-button",
                     id: "edit-button",
+                    onclick: toggle_edit_dropdown,
                     "Edit"
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Undo"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Redo"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Cut"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Copy"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Paste"
+                    div {
+                        class: if *edit_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Undo"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Redo"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Cut"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Copy"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Paste"
+                        }
                     }
                 }
                 div {
                     class: "toolbar-button",
                     id: "run-button",
+                    onclick: toggle_run_dropdown,
                     "Run"
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Run"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Debug"
+                    div {
+                        class: if *run_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Run"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Debug"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Stop"
+                        }
                     }
                 }
                 div {
                     class: "toolbar-button",
                     id: "help-button",
+                    onclick: toggle_help_dropdown,
                     "Help"
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Documentation"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "About Catalyst"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Preferences"
-                    }
-                    button {
-                        class: "toolbar-sub-button",
-                        onclick: move |_| document_content.set(String::new()),
-                        "Check for Updates"
+                    div {
+                        class: if *help_dropdown_open.read() { "dropdown-menu open" } else { "dropdown-menu" },
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Documentation"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "About Catalyst"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Preferences"
+                        }
+                        button {
+                            class: "toolbar-sub-button",
+                            onclick: move |_| document_content.set(String::new()),
+                            "Check for Updates"
+                        }
                     }
                 }
-
             }
 
             div {

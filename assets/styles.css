@@ -75,6 +75,12 @@ button {
   color: #ffffff;
   background-color: #35353562;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4b4b4b80;
+  transition: background-color 0.3s ease;
 }
 
 .toolbar{
@@ -106,16 +112,18 @@ button {
 .window-button {
   width: 25px;
   height: 25px;
+  transition: background-color 0.3s ease;
 }
 
 .toolbar-button:hover {
   background-color: #30303080;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.toolbar-sub-button {
+/* .toolbar-sub-button {
   display: none;
-}
+} */
 
 .hidden {
   display: none;
@@ -126,4 +134,22 @@ button {
   left: 10px;
   width: 25px;
   height: 25px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: #0000003f;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
